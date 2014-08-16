@@ -1,0 +1,24 @@
+name:                   Abstract-Impl-Libs
+version:                0.0.1
+stability:              provisional
+license:                BSD3
+license-file:           LICENSE
+
+cabal-version:          >= 1.8
+build-type:             Simple
+
+author:                 Andrew Darqui <andrew.darqui@gmail.com>
+maintainer:             Andrew Darqui <andrew.darqui@gmail.com>
+homepage:               github.com/adarqui/Abstract-Impl-Libs
+
+category:               Experimental
+synopsis:               Abstract
+
+Library
+ hs-source-dirs:        src
+ exposed-modules:
+                        Abstract.Impl.Libs.Lock
+                        Abstract.Impl.Libs.Lock.ConcurrentLock
+
+ build-depends:         base >= 3 && <5, concurrent-extra, Abstract-Interfaces
+ ghc-options:           -Wall -rtsopts
