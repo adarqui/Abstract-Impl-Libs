@@ -20,5 +20,15 @@ Library
                         Abstract.Impl.Libs.Lock
                         Abstract.Impl.Libs.Lock.ConcurrentLock
 
+                        Abstract.Impl.Libs.Counter
+                        Abstract.Impl.Libs.Counter.MVar.Internal
+                        Abstract.Impl.Libs.Counter.MVar.Inc
+                        Abstract.Impl.Libs.Counter.MVar.Dec
+                        Abstract.Impl.Libs.Counter.MVar.Get
+                        Abstract.Impl.Libs.Counter.IORef.Internal
+                        Abstract.Impl.Libs.Counter.IORef.Inc
+                        Abstract.Impl.Libs.Counter.IORef.Dec
+                        Abstract.Impl.Libs.Counter.IORef.Get
+
  build-depends:         base >= 3 && <5, concurrent-extra, Abstract-Interfaces
  ghc-options:           -Wall -rtsopts
