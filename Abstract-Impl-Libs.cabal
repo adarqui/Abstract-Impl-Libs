@@ -30,5 +30,10 @@ Library
                         Abstract.Impl.Libs.Counter.IORef.Dec
                         Abstract.Impl.Libs.Counter.IORef.Get
 
- build-depends:         base >= 3 && <5, concurrent-extra, Abstract-Interfaces
+                        Abstract.Impl.Libs.Compression.Raw
+                        Abstract.Impl.Libs.Compression.GZip
+                        Abstract.Impl.Libs.Compression.BZip
+                        Abstract.Impl.Libs.Compression.LZ4
+
+ build-depends:         base >= 3 && <5, concurrent-extra, bytestring, bzlib, zlib, lz4, Abstract-Interfaces
  ghc-options:           -Wall -rtsopts
