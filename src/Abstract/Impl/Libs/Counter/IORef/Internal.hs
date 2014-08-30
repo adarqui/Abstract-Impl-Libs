@@ -52,7 +52,7 @@ reset' w = do
 
 
 gentleReset' :: (Num t) => CounterIORefWrapper t -> IO ()
-gentleReset' = reset'
+gentleReset' _ = return ()
 
 
 counterIORefWrapper  :: (Num t) => IORef t -> t -> (CounterIORefWrapper t)

@@ -51,7 +51,7 @@ reset' w = do
 
 
 gentleReset' :: (Num t) => CounterMVarWrapper t -> IO ()
-gentleReset' = reset'
+gentleReset' _ = return ()
 
 
 counterMVarWrapper :: (Num t) => MVar t -> t -> (CounterMVarWrapper t)
