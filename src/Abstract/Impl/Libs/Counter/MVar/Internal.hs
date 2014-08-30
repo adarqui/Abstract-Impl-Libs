@@ -13,10 +13,10 @@ data CounterMVarWrapper t = CounterMVarWrapper {
 }
 
 
-mkCounter'MVar :: (Num t) => String -> t -> IO (Counter IO (CounterMVarWrapper t) t)
-mkCounter'MVar cname t = do
+mkCounter'MVar :: (Num t) => t -> IO (Counter IO (CounterMVarWrapper t) t)
+mkCounter'MVar t = do
  mv <- newMVar t
- return $ defaultCounterWrapper cname $ counterMVarWrapper mv t
+ return $ defaultCounterWrapper $ counterMVarWrapper mv t
 
 
 incr' :: (Num t) => CounterMVarWrapper t -> IO t
@@ -58,11 +58,10 @@ counterMVarWrapper :: (Num t) => MVar t -> t -> (CounterMVarWrapper t)
 counterMVarWrapper mv n = CounterMVarWrapper { _conn = mv, _n = n }
 
 
-defaultCounterWrapper :: (Num t) => String -> CounterMVarWrapper t -> Counter IO (CounterMVarWrapper t) t
-defaultCounterWrapper cname w = do
+defaultCounterWrapper :: (Num t) => CounterMVarWrapper t -> Counter IO (CounterMVarWrapper t) t
+defaultCounterWrapper w = do
  Counter {
   _c = w,
-  _cname = cname,
   _incr = incr',
   _incrBy = incrBy',
   _decr = decr',

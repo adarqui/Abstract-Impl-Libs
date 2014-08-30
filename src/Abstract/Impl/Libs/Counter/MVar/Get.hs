@@ -6,6 +6,6 @@ module Abstract.Impl.Libs.Counter.MVar.Get (
 import Abstract.Interfaces.Counter.Get
 import qualified Abstract.Impl.Libs.Counter.MVar.Internal as MVAR (mkCounter'MVar)
 
-mkCounter'MVar'Get s t = do
- v <- MVAR.mkCounter'MVar s t 
+mkCounter'MVar'Get t = do
+ v <- MVAR.mkCounter'MVar t 
  return $ counterToGet v

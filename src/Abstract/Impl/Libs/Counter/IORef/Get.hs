@@ -6,6 +6,6 @@ module Abstract.Impl.Libs.Counter.IORef.Get (
 import Abstract.Interfaces.Counter.Get
 import qualified Abstract.Impl.Libs.Counter.IORef.Internal as IOREF (mkCounter'IORef)
 
-mkCounter'IORef'Get s t = do
- v <- IOREF.mkCounter'IORef s t 
+mkCounter'IORef'Get t = do
+ v <- IOREF.mkCounter'IORef t 
  return $ counterToGet v

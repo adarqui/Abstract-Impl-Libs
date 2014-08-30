@@ -14,10 +14,10 @@ data CounterIORefWrapper t = CounterIORefWrapper {
 }
 
 
-mkCounter'IORef :: (Num t) => String -> t -> IO (Counter IO (CounterIORefWrapper t) t)
-mkCounter'IORef cname t = do
+mkCounter'IORef :: (Num t) => t -> IO (Counter IO (CounterIORefWrapper t) t)
+mkCounter'IORef t = do
  ir <- newIORef t
- return $ defaultCounterWrapper cname $ counterIORefWrapper ir t
+ return $ defaultCounterWrapper $ counterIORefWrapper ir t
 
 
 incr' :: (Num t) => CounterIORefWrapper t -> IO t
@@ -59,11 +59,10 @@ counterIORefWrapper  :: (Num t) => IORef t -> t -> (CounterIORefWrapper t)
 counterIORefWrapper ir n = CounterIORefWrapper { _conn = ir, _n = n }
 
 
-defaultCounterWrapper :: (Num t) => String -> CounterIORefWrapper t -> (Counter IO (CounterIORefWrapper t) t)
-defaultCounterWrapper cname w = do
+defaultCounterWrapper :: (Num t) => CounterIORefWrapper t -> (Counter IO (CounterIORefWrapper t) t)
+defaultCounterWrapper w = do
  Counter {
   _c = w,
-  _cname = cname,
   _incr = incr',
   _incrBy = incrBy',
   _decr = decr',
