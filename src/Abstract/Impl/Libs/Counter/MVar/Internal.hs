@@ -1,6 +1,5 @@
 module Abstract.Impl.Libs.Counter.MVar.Internal (
  CounterMVar,
- defaultCounter'MVar,
  mkCounter'MVar
 ) where
 
@@ -16,7 +15,7 @@ data CounterMVar t = CounterMVar {
 mkCounter'MVar :: (Num t) => t -> IO (Counter IO t)
 mkCounter'MVar t = do
  mv <- newMVar t
- return $ defaultCounter'MVar $ counterMVar mv t
+ return $ buildCounter'MVar $ counterMVar mv t
 
 
 incr' :: (Num t) => CounterMVar t -> IO t
@@ -58,8 +57,8 @@ counterMVar :: (Num t) => MVar t -> t -> (CounterMVar t)
 counterMVar mv n = CounterMVar { _conn = mv, _n = n }
 
 
-defaultCounter'MVar :: (Num t) => CounterMVar t -> Counter IO t
-defaultCounter'MVar w = do
+buildCounter'MVar :: (Num t) => CounterMVar t -> Counter IO t
+buildCounter'MVar w = do
  Counter {
   _incr = incr' w,
   _incrBy = incrBy' w,

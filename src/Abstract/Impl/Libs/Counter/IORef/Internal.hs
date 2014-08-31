@@ -1,6 +1,5 @@
 module Abstract.Impl.Libs.Counter.IORef.Internal (
  CounterIORef,
- defaultCounter'IORef,
  mkCounter'IORef
 ) where
 
@@ -17,7 +16,7 @@ data CounterIORef t = CounterIORef {
 mkCounter'IORef :: (Num t) => t -> IO (Counter IO t)
 mkCounter'IORef t = do
  ir <- newIORef t
- return $ defaultCounter'IORef $ counterIORef ir t
+ return $ buildCounter'IORef $ counterIORef ir t
 
 
 incr' :: (Num t) => CounterIORef t -> IO t
@@ -59,8 +58,8 @@ counterIORef  :: (Num t) => IORef t -> t -> (CounterIORef t)
 counterIORef ir n = CounterIORef { _conn = ir, _n = n }
 
 
-defaultCounter'IORef :: (Num t) => CounterIORef t -> (Counter IO t)
-defaultCounter'IORef w = do
+buildCounter'IORef :: (Num t) => CounterIORef t -> (Counter IO t)
+buildCounter'IORef w = do
  Counter {
   _incr = incr' w,
   _incrBy = incrBy' w,
