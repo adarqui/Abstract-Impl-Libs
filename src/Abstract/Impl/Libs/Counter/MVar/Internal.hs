@@ -1,72 +1,71 @@
 module Abstract.Impl.Libs.Counter.MVar.Internal (
- CounterMVarWrapper,
- defaultCounterWrapper,
+ CounterMVar,
+ defaultCounter'MVar,
  mkCounter'MVar
 ) where
 
 import Abstract.Interfaces.Counter
 import Control.Concurrent.MVar
 
-data CounterMVarWrapper t = CounterMVarWrapper {
+data CounterMVar t = CounterMVar {
  _conn :: MVar t,
  _n :: t
 }
 
 
-mkCounter'MVar :: (Num t) => t -> IO (Counter IO (CounterMVarWrapper t) t)
+mkCounter'MVar :: (Num t) => t -> IO (Counter IO t)
 mkCounter'MVar t = do
  mv <- newMVar t
- return $ defaultCounterWrapper $ counterMVarWrapper mv t
+ return $ defaultCounter'MVar $ counterMVar mv t
 
 
-incr' :: (Num t) => CounterMVarWrapper t -> IO t
+incr' :: (Num t) => CounterMVar t -> IO t
 incr' w = incrBy' w 1
 
 
-incrBy' :: (Num t) => CounterMVarWrapper t -> t -> IO t
+incrBy' :: (Num t) => CounterMVar t -> t -> IO t
 incrBy' w by = do
  modifyMVar (_conn w) (\a -> return (a+by,a+by))
 
 
-decr' :: (Num t) => CounterMVarWrapper t -> IO t
+decr' :: (Num t) => CounterMVar t -> IO t
 decr' w = decrBy' w 1
 
 
-decrBy' :: (Num t) => CounterMVarWrapper t -> t -> IO t
+decrBy' :: (Num t) => CounterMVar t -> t -> IO t
 decrBy' w by = do
  modifyMVar (_conn w) (\a -> return (a-by,a-by))
 
 
-get' :: (Num t) => CounterMVarWrapper t -> IO (Maybe t)
+get' :: (Num t) => CounterMVar t -> IO (Maybe t)
 get' w = do
  v <- takeMVar (_conn w)
  putMVar (_conn w) v
  return $ Just v
 
 
-reset' :: (Num t) => CounterMVarWrapper t -> IO ()
+reset' :: (Num t) => CounterMVar t -> IO ()
 reset' w = do
  _ <- modifyMVar (_conn w) (\_ -> return (_n w, _n w))
  return ()
 
 
-gentleReset' :: (Num t) => CounterMVarWrapper t -> IO ()
+gentleReset' :: (Num t) => CounterMVar t -> IO ()
 gentleReset' _ = return ()
 
 
-counterMVarWrapper :: (Num t) => MVar t -> t -> (CounterMVarWrapper t)
-counterMVarWrapper mv n = CounterMVarWrapper { _conn = mv, _n = n }
+counterMVar :: (Num t) => MVar t -> t -> (CounterMVar t)
+counterMVar mv n = CounterMVar { _conn = mv, _n = n }
 
 
-defaultCounterWrapper :: (Num t) => CounterMVarWrapper t -> Counter IO (CounterMVarWrapper t) t
-defaultCounterWrapper w = do
+defaultCounter'MVar :: (Num t) => CounterMVar t -> Counter IO t
+defaultCounter'MVar w = do
  Counter {
-  _c = w,
-  _incr = incr',
-  _incrBy = incrBy',
-  _decr = decr',
-  _decrBy = decrBy',
-  _get = get',
-  _reset = reset',
-  _gentleReset = gentleReset'
+  _incr = incr' w,
+  _incrBy = incrBy' w,
+  _decr = decr' w,
+  _decrBy = decrBy' w,
+  _get = get' w,
+  _reset = reset' w,
+  _gentleReset = gentleReset' w
  }
