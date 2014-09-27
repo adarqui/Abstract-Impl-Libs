@@ -6,6 +6,6 @@ import Abstract.Interfaces.Queue.Deq
 
 import qualified Abstract.Impl.Libs.Queue.Chan.Internal as CHAN (mkQueue'Chan)
 
-mkQueue'Chan'Deq qrw = do
- v <- CHAN.mkQueue'Chan qrw
+mkQueue'Chan'Deq = do
+ v <- CHAN.mkQueue'Chan
  return $ queueToDeq v

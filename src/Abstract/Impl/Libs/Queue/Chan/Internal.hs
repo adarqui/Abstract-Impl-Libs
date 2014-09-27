@@ -14,10 +14,10 @@ data QueueChan t = QueueChan {
  _conn :: Chan t
 }
 
-mkQueue'Chan :: QueueChan t -> IO (Queue IO t)
-mkQueue'Chan qrw = do
+mkQueue'Chan :: IO (Queue IO t)
+mkQueue'Chan = do
  mv <- newChan
- return $ buildQueue $ qrw { _conn = mv }
+ return $ buildQueue $ QueueChan { _conn = mv }
 
 enqueue' :: QueueChan t -> t -> IO ()
 enqueue' QueueChan{..} t = do

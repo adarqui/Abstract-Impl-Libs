@@ -6,6 +6,6 @@ import Abstract.Interfaces.Queue.Enq
 
 import qualified Abstract.Impl.Libs.Queue.Chan.Internal as CHAN (mkQueue'Chan)
 
-mkQueue'Chan'Enq qrw = do
- v <- CHAN.mkQueue'Chan qrw
+mkQueue'Chan'Enq = do
+ v <- CHAN.mkQueue'Chan
  return $ queueToEnq v
