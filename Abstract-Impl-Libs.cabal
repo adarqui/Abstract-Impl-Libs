@@ -30,6 +30,14 @@ Library
                         Abstract.Impl.Libs.Counter.IORef.Dec
                         Abstract.Impl.Libs.Counter.IORef.Get
 
+                        Abstract.Impl.Libs.Queue
+                        Abstract.Impl.Libs.Queue.MVar.Internal
+                        Abstract.Impl.Libs.Queue.MVar.Enq
+                        Abstract.Impl.Libs.Queue.MVar.Deq
+                        Abstract.Impl.Libs.Queue.Chan.Internal
+                        Abstract.Impl.Libs.Queue.Chan.Enq
+                        Abstract.Impl.Libs.Queue.Chan.Deq
+
                         Abstract.Impl.Libs.Compression.Raw
                         Abstract.Impl.Libs.Compression.GZip
                         Abstract.Impl.Libs.Compression.BZip
